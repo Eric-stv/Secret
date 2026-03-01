@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I have a question...</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #ffe6e6; font-family: sans-serif; overflow: hidden; }
+        #card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); width: 85%; max-width: 400px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .gif-container { width: 100%; margin-bottom: 10px; }
+        img { width: 100%; max-height: 250px; object-fit: contain; border-radius: 15px; }
+        h1 { color: #ff4d6d; font-size: 1.4rem; margin: 15px 0; }
+        .btn-group { display: flex; justify-content: center; align-items: center; gap: 15px; min-height: 180px; width: 100%; }
+        button { padding: 12px 25px; font-size: 1rem; font-weight: bold; border: none; border-radius: 50px; cursor: pointer; transition: transform 0.2s ease; }
+        #yesBtn { background-color: #2ecc71; color: white; position: relative; z-index: 10; }
+        #noBtn { background-color: #ff4d6d; color: white; position: relative; z-index: 5; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="card">
+        <div id="ask">
+            <div class="gif-container">
+                <img src=https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyODdycGF1MjE3eDMzc3dkbjhiaWE1eW9reWs0amw5MmpqNTlidjk2dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YZOsKxJfmvzG0/giphy.gif
+            </div>
+            <h1>Will you be my girlfriend? ❤️</h1>
+            <div class="btn-group">
+                <button id="yesBtn">Yes!</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div id="celebrate" class="hidden">
+            <div class="gif-container">
+                <img src=https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUyMTU1bmUybWQzcTFvd3Z1YW9leW1rN2c4YmRlcmFsaTN1a2ZmeDBjbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wvYNSqBAMDVx8CEYkt/giphy.gif
+            </div>
+            <h1> I LOVE YOUUU!! </h1></h1>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const music = document.getElementById('bgMusic');
+        let yesSize = 1;
+        let noSize = 1;
+
+        const handleNo = () => {
+            yesSize += 0.4;
+            yesBtn.style.transform = `scale(${yesSize})`;
+            if (noSize > 0.2) {
+                noSize -= 0.15;
+                noBtn.style.transform = `scale(${noSize})`;
+            }
+        };
+
+        noBtn.addEventListener('click', handleNo);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); handleNo(); });
+
+        yesBtn.addEventListener('click', () => {
+            // Switch views immediately so it doesn't stay blank
+            document.getElementById('ask').classList.add('hidden');
+            document.getElementById('celebrate').classList.remove('hidden');
+            
+            // Try to play music
+            music.play().catch(e => console.log("Music waiting for rename..."));
+            
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        });
+    </script>
+</body>
+</html>
